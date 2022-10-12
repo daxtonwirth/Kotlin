@@ -6,8 +6,25 @@ fun getUserInput(): Int {
     return Integer.valueOf(readLine())
 }
 
-fun viewPasswords(fileName : File) {
-    println(fileName.readLines()) //print only website
+fun viewWebsites(fileName : File) {
+    println("Here are the current websites you have passwords saved for:")
+    var websiteNames = fileName.readLines()
+    for (x in websiteNames) {
+        println(x.split("|")[0])
+    }
+    println()
+}
+
+fun viewPasswords(fileName : File){
+    print("Enter the website: ")
+    val newWeb = readLine().toString()
+    var websiteNames = fileName.readLines()
+    for (x in websiteNames) {
+        if (newWeb == x.split("|")[0]) {
+            println("Username: " + x.split("|")[1])
+            println("Username: " + x.split("|")[2])
+        }
+    }
 }
 
 fun addPassword(fileName : File) {
@@ -17,7 +34,7 @@ fun addPassword(fileName : File) {
     val newUsername = readLine()
     print("Enter your new password: ")
     val newPassword = readLine()
-    fileName.appendText(newWeb.plus(":").plus(newUsername).plus(":").plus(newPassword).plus("\n"))
+    fileName.appendText(newWeb.plus("|").plus(newUsername).plus("|").plus(newPassword).plus("\n"))
 }
 
 fun main(args: Array<String>) {
@@ -25,15 +42,18 @@ fun main(args: Array<String>) {
     val userPassword = "password" //add timeout for login
     val fileName = File("passwords.txt")
 
-    print("Please Enter your username: ")
+    print("Please enter your username: ")
     val username = readLine()
     if (username == username1) {
         print("Password: ")
         val password = readLine()
         if (password == userPassword) {
             println("Login Successful.")
+
+            viewWebsites(fileName)
+
             var choice = 0
-            while (choice != 3) {
+            while (choice < 3) {
                 choice = getUserInput()
 
                 if (choice == 1) {
@@ -43,7 +63,10 @@ fun main(args: Array<String>) {
                     addPassword(fileName)
                 }
                 else {
-                    print("Invalid Choice")
+                    if (choice == 3){
+                        return
+                    }
+                    println("Invalid Choice")
                     choice = 0
                 }
             }
