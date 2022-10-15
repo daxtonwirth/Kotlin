@@ -16,14 +16,19 @@ fun viewWebsites(fileName : File) {
 }
 
 fun viewPasswords(fileName : File){
-    print("Enter the website: ")
+    print("Enter the website for the password: ")
     val newWeb = readLine().toString()
     var websiteNames = fileName.readLines()
+    var found = 1
     for (x in websiteNames) {
         if (newWeb == x.split("|")[0]) {
-            println("Username: " + x.split("|")[1])
-            println("Username: " + x.split("|")[2])
+            println("Username " + found + ": " + x.split("|")[1])
+            println("Password " + found + ": " + x.split("|")[2])
+            found += 1
         }
+    }
+    if (found == 1){
+        println("Website " + newWeb + " is not saved")
     }
 }
 
@@ -37,44 +42,69 @@ fun addPassword(fileName : File) {
     fileName.appendText(newWeb.plus("|").plus(newUsername).plus("|").plus(newPassword).plus("\n"))
 }
 
-fun main(args: Array<String>) {
-    val username1 = "dax"
-    val userPassword = "password" //add timeout for login
-    val fileName = File("passwords.txt")
+fun main() {
+    //add timeout for login
+    val userFileName = File("users.txt")
 
+    print("Enter 1 to login or 2 to create an account or anything else to quit: ")
+    val userInput = readLine()
+    if (userInput == "2"){
+        print("Please enter your username: ")
+        val username = readLine()
+        print("Please enter your password: ") // add hashing
+        val password = readLine()
+        print("Please enter your password filename: ")
+        val passwordFileName = readLine()
+        userFileName.appendText(username.plus("|").plus(password).plus("|").plus(passwordFileName).plus("\n"))
+        println("Account Creation Successful")
+    }
+
+    println("Login")
     print("Please enter your username: ")
     val username = readLine()
-    if (username == username1) {
-        print("Password: ")
-        val password = readLine()
-        if (password == userPassword) {
-            println("Login Successful.")
 
-            viewWebsites(fileName)
+    var userNames = userFileName.readLines()
+    var found = 0
+    for (x in userNames) {
+        if (x.split("|")[0] == username) {
+            found += 1
 
-            var choice = 0
-            while (choice < 3) {
-                choice = getUserInput()
+            print("Password: ")
+            val password = readLine()
+            if (password == x.split("|")[1]) {
+                println("Login Successful.")
+                val passwordFileName = File(x.split("|")[2])
 
-                if (choice == 1) {
-                    viewPasswords(fileName)
-                }
-                else if (choice == 2) {
-                    addPassword(fileName)
-                }
-                else {
-                    if (choice == 3){
-                        return
+                var choice = 0
+                while (choice < 3) {
+                    choice = getUserInput()
+
+                    if (choice == 1) {
+                        viewWebsites(passwordFileName)
+                        viewPasswords(passwordFileName)
                     }
-                    println("Invalid Choice")
-                    choice = 0
+                    else if (choice == 2) {
+                        addPassword(passwordFileName)
+                    }
+                    else {
+                        if (choice == 3){
+                            return
+                        }
+                        println("Invalid Choice")
+                        choice = 0
+                    }
                 }
+            } else {
+                println("Incorrect password")
             }
-        } else {
-            println("Incorrect password")
+
+
+
         }
-    } else {
+    }
+    if (found == 0) {
         println("Username does not exist")
     }
+
 
 }
