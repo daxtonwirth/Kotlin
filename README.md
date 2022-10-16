@@ -1,6 +1,6 @@
-# Kotlin Overview
+# Kotlin Password Manager Overview
 
-The purpose of this project is to learn Kotlin so I can build an Andriod app in the near future and will contain the fundamental aspects of Kotlin I need to know in order to do that.
+The purpose of this project is to learn Kotlin so I can build an Andriod app in the near future and will contain the fundamental aspects of Kotlin I need to know in order to do that. In order to do this, I created a fundamental password manager that contains the following:
 
 - Variables (mutable and immutable)
 - Expressions
@@ -9,7 +9,7 @@ The purpose of this project is to learn Kotlin so I can build an Andriod app in 
 - Functions
 - Classes
 
-{Provide a description the software that you wrote to demonstrate the Kotlin language.}
+The password manager first asks the user to create an account or login and stores the user's info in a file. Once they are logged in, they are able to input a website and a username and password for that websites which is stored the user's password file. 
 
 {Provide a link to your YouTube demonstration.  It should be a 4-5 minute demo of the software running and a walkthrough of the code.  Focus should be on sharing what you learned about the language syntax.}
 
@@ -17,9 +17,7 @@ The purpose of this project is to learn Kotlin so I can build an Andriod app in 
 
 # Development Environment
 
-{Describe the tools that you used to develop the software}
-
-{Describe the programming language that you used and any libraries.}
+I used IDEA to build the software. The program is written in Kotlin and the only library I used was java.io.File to write the files.
 
 # Useful Websites
 
@@ -30,6 +28,6 @@ The purpose of this project is to learn Kotlin so I can build an Andriod app in 
 
 # Future Work
 
-* Item 1
-* Item 2
-* Item 3
+* Add password hashing for login
+* Encrypt saved passwords
+* Enable to delete passwords
